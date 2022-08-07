@@ -7,7 +7,7 @@ const useBookSerarch = (query, pageNumb) => {
   const [books, setBooks] = useState([]);
   const [hasMore, setHasMore] = useState(false);
 
-  console.log(books, "useState");
+  // console.log(books, "useState");
 
   useEffect(() => {
     setLoading(true);
@@ -21,11 +21,18 @@ const useBookSerarch = (query, pageNumb) => {
     })
       .then((res) => {
         setBooks(() => {
-          return [...books, res.data.docs.map((book) => book.title)];
+          return [...books, ...res.data.docs.map((b) => b.title)];
         });
         setHasMore(res.data.docs.length > 0);
         setLoading(false);
       })
+      // .then((res) => {
+      //   setBooks((prevBooks) => {
+      //     return [...prevBooks, ...res.data.docs.map((b) => b.title)];
+      //   });
+      //   setHasMore(res.data.docs.length > 0);
+      //   setLoading(false);
+      // })
       .catch((e) => {
         if (axios.isCancel(e)) return;
         setError(true);

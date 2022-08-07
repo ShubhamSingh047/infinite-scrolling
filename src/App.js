@@ -7,10 +7,8 @@ function App() {
   const [pageNumb, setPageNumb] = useState(1);
   const { loading, error, books, hasMore } = useBookSerarch(query, pageNumb);
 
-  console.log(books, "books");
-
   const queryHandler = (e) => {
-    e.preventDefault();
+    // e.preventDefault();
     setQuery(e.target.value);
     setPageNumb(1);
   };
@@ -18,7 +16,11 @@ function App() {
     <div>
       <input type="text" onChange={queryHandler} />
       {books &&
-        books.map((b) => <div key={new Date().getTime().toString()}>{b}</div>)}
+        books.map((b, i) => (
+          <div key={i}>
+            <li>{b}</li>
+          </div>
+        ))}
       <div>{loading && <h1>Loading....</h1>}</div>
       <div>{error && <h1>Error....</h1>}</div>
     </div>
